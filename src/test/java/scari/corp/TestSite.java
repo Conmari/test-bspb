@@ -1,15 +1,21 @@
 package scari.corp;
 
 import java.time.Duration;
+import java.util.List;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assumptions.*;
+import static org.junit.jupiter.api.DynamicTest.*;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.SessionNotCreatedException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -31,9 +37,21 @@ public class TestSite {
 
     @BeforeEach
     public void setUp() {
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.get(BASE_URL);
+
+        try {
+            driver = new ChromeDriver();
+            driver.manage().window().maximize();
+            driver.get(BASE_URL);
+        } catch (SessionNotCreatedException e) {
+            String msg = e.getMessage();
+            if (msg != null && msg.contains("cannot find Chrome binary")) {
+                System.err.println("Chrome не найден. Пропускаем тесты.");
+                assumeTrue(false, "Chrome не найден. Пропускаем тесты.");
+            } else {
+                throw e;
+            }
+        }
+
     }
 
     @Test
@@ -62,17 +80,16 @@ public class TestSite {
         button.click();
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement buttonFLPage = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"popover-content-:R3adt9jltmH1:\"]/div/a[1]")));
+        WebElement buttonFLPage = wait.until(ExpectedConditions
+                .elementToBeClickable(By.xpath("//*[@id=\"popover-content-:R3adt9jltmH1:\"]/div/a[1]")));
         buttonFLPage.click();
 
         wait.until(ExpectedConditions.numberOfWindowsToBe(2));
         String originalWindow = driver.getWindowHandle();
-        for (String windowHandle : driver.getWindowHandles()) {
-            if (!windowHandle.equals(originalWindow)) {
-                driver.switchTo().window(windowHandle);
-                break;
-            }
-        }
+        driver.getWindowHandles().stream()
+                .filter(windowHandle -> !windowHandle.equals(originalWindow))
+                .findFirst()
+                .ifPresent(windowHandle -> driver.switchTo().window(windowHandle));
         wait.until(driver -> driver.getCurrentUrl().matches(waitRexpURL));
         assertTrue(driver.getCurrentUrl().matches(waitRexpURL), "URL должен начинаться " + waitRexpURL);
     }

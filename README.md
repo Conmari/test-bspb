@@ -2,7 +2,7 @@
 
 ## Требования
 Цель: Автоматическое тестирование GUI сайта bspb.ru.  
-Стек: Java 11, selenium, junit  
+Стек: Java 21, selenium, junit, gradle  
 Тестов должно быть не больше 10 .
 
 ## Информация 
@@ -13,13 +13,16 @@
 
 ## Запуск проверок
 Команды запуска  проекта  
-- mvn test (запуск тестов)
-- mvn verify (Запуск тестов + в папке reports построится отчёт по тестам)
+- .\gradlew test 
 
 ## Результаты команд
 В IDE после mvn test получим результат о пройденных/проваленных тестах  
-![image](https://github.com/user-attachments/assets/d9096f8f-8d77-45cb-b318-745906ab8292)  
+<img width="766" height="237" alt="image" src="https://github.com/user-attachments/assets/87be5dd0-5126-4629-a7b5-7f75735db34b" />
 
-Html отчёт после команды mvn verify  
-![image](https://github.com/user-attachments/assets/fdfd05ff-80fa-4c92-a7df-fe83f63fa0f0)
+
+Html отчёт по пути  "(путь до проекта)\test-bspb\build\reports\tests\test\index.html".
+<img width="919" height="418" alt="image" src="https://github.com/user-attachments/assets/0f1759c0-3737-4062-964d-bab6d4c480a8" />  
+Подробная версия отчёта с тестами в классе.
+<img width="1211" height="533" alt="image" src="https://github.com/user-attachments/assets/f05ae1fc-a309-4574-bf5b-bd59fc91b07e" />
+
 

@@ -1,24 +1,21 @@
 package scari.corp;
 
+import scari.corp.utils.ChromeDriverFactory;
+import scari.corp.utils.WebDriverUtils;
+
 import java.time.Duration;
-import java.util.List;
-import java.util.stream.Stream;
 
 import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assumptions.*;
-import static org.junit.jupiter.api.DynamicTest.*;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.SessionNotCreatedException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -37,21 +34,9 @@ public class TestSite {
 
     @BeforeEach
     public void setUp() {
-
-        try {
-            driver = new ChromeDriver();
-            driver.manage().window().maximize();
-            driver.get(BASE_URL);
-        } catch (SessionNotCreatedException e) {
-            String msg = e.getMessage();
-            if (msg != null && msg.contains("cannot find Chrome binary")) {
-                System.err.println("Chrome не найден. Пропускаем тесты.");
-                assumeTrue(false, "Chrome не найден. Пропускаем тесты.");
-            } else {
-                throw e;
-            }
-        }
-
+        driver = ChromeDriverFactory.createDriver();
+        driver.manage().window().maximize();
+        WebDriverUtils.safeGet(driver, BASE_URL);
     }
 
     @Test

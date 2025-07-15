@@ -8,16 +8,27 @@ repositories {
     // mavenLocal()
 }
 
+
+val seleniumVersion = "4.34.0"
+val webdriverManagerVersion = "6.1.0"
+val slf4jVersion = "2.0.17"
+val junitJupiterVersion = "5.12.2"
+val junitPlatformVersion = "1.12.2"
+val cucumberVersion = "7.24.0"
+
 dependencies {
-    implementation("org.seleniumhq.selenium:selenium-java:4.34.0")
-    implementation("io.github.bonigarcia:webdrivermanager:6.1.0")
-    implementation("org.slf4j:slf4j-api:2.0.17")
-    implementation("org.slf4j:slf4j-simple:2.0.17")
+    implementation("org.seleniumhq.selenium:selenium-java:$seleniumVersion")
+    implementation("io.github.bonigarcia:webdrivermanager:$webdriverManagerVersion")
+    implementation("org.slf4j:slf4j-api:$slf4jVersion")
+    implementation("org.slf4j:slf4j-simple:$slf4jVersion")
 
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.12.2")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher:$junitPlatformVersion")    
+    testImplementation("org.junit.platform:junit-platform-suite-api:$junitPlatformVersion")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion")
+    testImplementation("io.cucumber:cucumber-java:$cucumberVersion")
+    testImplementation("io.cucumber:cucumber-junit-platform-engine:$cucumberVersion")
 
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.12.2")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.12.2")
 }
 
 group = "scari.corp"
@@ -42,4 +53,7 @@ tasks.test {
     testLogging {
         events("passed", "skipped", "failed")
     }
+    systemProperty("cucumber.filter.tags", System.getProperty("cucumber.filter.tags"))
+
 }
+

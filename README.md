@@ -14,15 +14,11 @@
 ## Запуск проверок
 Команды запуска  проекта  
 - .\gradlew test 
-
-## Результаты команд
-В IDE после mvn test получим результат о пройденных/проваленных тестах  
-<img width="766" height="237" alt="image" src="https://github.com/user-attachments/assets/87be5dd0-5126-4629-a7b5-7f75735db34b" />
+- .\gradlew test -Dcucumber.filter.tags="@mobile" - Этой командой запустятся все тесты на cucumber только с указанным тэгом, но так же и все unit тесты
 
 
-Html отчёт по пути  "(путь до проекта)\test-bspb\build\reports\tests\test\index.html".
-<img width="919" height="418" alt="image" src="https://github.com/user-attachments/assets/0f1759c0-3737-4062-964d-bab6d4c480a8" />  
-Подробная версия отчёта с тестами в классе.
-<img width="1211" height="533" alt="image" src="https://github.com/user-attachments/assets/f05ae1fc-a309-4574-bf5b-bd59fc91b07e" />
+
+Html отчёт тестов cucumber по пути  "C:\work\project\java\test-bspb\build\reports\tests\test\index.html".
+<img width="874" height="497" alt="image" src="https://github.com/user-attachments/assets/6809d674-a977-48a9-aad9-012a8a41c2cb" />
 
 

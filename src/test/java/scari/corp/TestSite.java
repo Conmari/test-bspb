@@ -1,18 +1,14 @@
 package scari.corp;
 
+import org.junit.jupiter.api.*;
 import scari.corp.utils.ChromeDriverFactory;
 import scari.corp.utils.WebDriverUtils;
 
 import java.time.Duration;
 
-import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -22,6 +18,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 @DisplayName("Тесты для сайта БСПБ")
+@Disabled("сейчас гоняют cucumber")
 public class TestSite {
 
     private WebDriver driver;

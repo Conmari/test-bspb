@@ -15,10 +15,14 @@ val slf4jVersion = "2.0.17"
 val junitJupiterVersion = "5.12.2"
 val junitPlatformVersion = "1.12.2"
 val cucumberVersion = "7.24.0"
+val lang3Version = "3.18.0"
+val assertjVersion = "3.27.3"
 
 dependencies {
     implementation("org.seleniumhq.selenium:selenium-java:$seleniumVersion")
     implementation("io.github.bonigarcia:webdrivermanager:$webdriverManagerVersion")
+    implementation("org.apache.commons:commons-lang3:$lang3Version")  /* webdriverManagerVersion подтягивал версию commons-lang3:3.17.0
+                                                                            внутри какая то уязвимость которая может превести к StackOverflowError */
     implementation("org.slf4j:slf4j-api:$slf4jVersion")
     implementation("org.slf4j:slf4j-simple:$slf4jVersion")
 
@@ -28,6 +32,10 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion")
     testImplementation("io.cucumber:cucumber-java:$cucumberVersion")
     testImplementation("io.cucumber:cucumber-junit-platform-engine:$cucumberVersion")
+    testImplementation("org.assertj:assertj-core:$assertjVersion")
+
+    testImplementation("io.qameta.allure:allure-junit5:2.28.1")
+    testImplementation("io.qameta.allure:allure-cucumber7-jvm:2.23.0")
 
 }
 
@@ -54,6 +62,6 @@ tasks.test {
         events("passed", "skipped", "failed")
     }
     systemProperty("cucumber.filter.tags", System.getProperty("cucumber.filter.tags"))
-
+    systemProperty("cucumber.plugin", "pretty,io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm")
 }
 

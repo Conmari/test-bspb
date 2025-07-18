@@ -1,17 +1,16 @@
 package steps;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+import static org.assertj.core.api.Assertions.assertThat
+        ;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.ru.*;
+import io.qameta.allure.AllureId;
+import io.qameta.allure.Step;
+import org.assertj.core.api.SoftAssertions;
+import org.openqa.selenium.*;
 import scari.corp.utils.ChromeDriverFactory;
 import scari.corp.utils.WebDriverUtils;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 
 
 public class mainPageSteps {
@@ -32,28 +31,55 @@ public class mainPageSteps {
         }
     }
 
+    @Step
     @Когда("я открываю главную страницу")
     public void я_открываю_главную_страницу() {
         driver.manage().window().maximize();
-        driver.get(BASE_URL);
     }
 
+    @Step
     @Тогда("отображается кнопка Войти")
     public void отображается_кнопка_Войти_на_главном_экране() {
         WebElement login = driver.findElement(By.id("popover-trigger-:R3adt9jltmH1:"));
-        assertTrue(login.isDisplayed(), "Кнопка войти должна отображаться");
+        assertThat(login.isDisplayed())
+                .as("Кнопка войти должна отображаться")
+                .isTrue();
     }
 
-    @Когда("я открываю главную страницу на телефоне")
-    public void я_открываю_главную_страницу_на_телефоне() {
-        driver.manage().window().setSize(new Dimension(375, 812));
-        driver.get(BASE_URL);
+    @Step
+    @Когда("я открываю главную страницу на телефоне с шириной {int} и высотой {int}")
+    public void я_открываю_главную_страницу_на_телефоне(int width, int height) {
+
+        SoftAssertions softly = new SoftAssertions();
+
+        softly.assertThat(width)
+                .withFailMessage("Ширина должна быть положительной числом, но получено: %d", width)
+                .isGreaterThan(0);
+
+        softly.assertThat(height)
+                .withFailMessage("Высота должна быть положительной числом, но получено: %d", height)
+                .isGreaterThan(0);
+
+        if (width > 0 && height > 0) {
+            try {
+                driver.manage().window().setSize(new Dimension(width, height));
+            } catch (InvalidArgumentException e) {
+                softly.fail("Ошибка установки размера окна: " + e.getMessage());
+            }
+        } else {
+            System.out.println("Установка размера окна пропущена из-за некорректных параметров: width="
+                    + width + ", height=" + height);
+        }
+
+        softly.assertAll();
     }
 
+    @Step
     @Тогда("кнопка Войти не отображается")
     public void кнопка_Войти_не_отображается() {
         WebElement login = driver.findElement(By.id("popover-trigger-:R3adt9jltmH1:"));
-        assertFalse(login.isDisplayed(), "Кнопка войти должна отображаться");
+        assertThat(login.isDisplayed())
+                .as("Кнопка войти отображаться, не должна")
+                .isFalse();
     }
-
 }

@@ -19,5 +19,4 @@
 
 
 Html отчёт тестов.
-
-
+<img width="1858" height="958" alt="image" src="https://github.com/user-attachments/assets/bb4b739a-c9ee-4694-b2bf-df3a9ff91f71" />

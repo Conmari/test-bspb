@@ -63,5 +63,6 @@ tasks.test {
     }
     systemProperty("cucumber.filter.tags", System.getProperty("cucumber.filter.tags"))
     systemProperty("cucumber.plugin", "pretty,io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm")
+    systemProperty("allure.results.directory", "$buildDir/allure-results")
 }
 

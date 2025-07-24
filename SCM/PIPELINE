@@ -1,0 +1,27 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scmGit(branches: [[name: '*/migration-on-gradle-and-java-21']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Conmari/test-bspb']])
+            }
+        }
+        stage('Build') {
+            steps {
+                bat 'gradlew.bat clean --no-daemon'
+            }
+        }
+        stage('Test') {
+            steps {
+                bat 'gradlew.bat test --no-daemon '
+            }
+            post {
+                always {
+                    junit '**/build/test-results/**/*.xml'
+                    allure includeProperties: false, jdk: '', results: [[path: 'build/allure-results']]
+                }
+            }
+        }
+    }
+}

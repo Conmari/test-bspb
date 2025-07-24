@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.ru.*;
-import io.qameta.allure.AllureId;
 import io.qameta.allure.Step;
 import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.*;
@@ -54,7 +53,7 @@ public class mainPageSteps {
 
         softly.assertThat(width)
                 .withFailMessage("Ширина должна быть положительной числом, но получено: %d", width)
-                .isGreaterThan(0);
+                .isPositive();
 
         softly.assertThat(height)
                 .withFailMessage("Высота должна быть положительной числом, но получено: %d", height)

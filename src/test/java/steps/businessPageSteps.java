@@ -5,11 +5,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.ru.*;
-import io.qameta.allure.AllureId;
 import io.qameta.allure.Step;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import scari.corp.utils.ChromeDriverFactory;
 
 import org.openqa.selenium.By;
@@ -28,7 +26,7 @@ public class businessPageSteps {
         driver = ChromeDriverFactory.createDriver();
         WebDriverUtils.safeGet(driver, BASE_URL);
     }
-    
+
 
     @After
     public void tearDown() {
@@ -40,7 +38,7 @@ public class businessPageSteps {
     @Step
     @Когда("я ввожу свои данные")
     public void я_ввожу_свои_данные() {
-            
+
         WebElement nameInput = driver.findElement(By.id("FIRSTNAME-Имя"));
         nameInput.sendKeys("Тест Тнстович");
 
@@ -60,7 +58,18 @@ public class businessPageSteps {
     }
 
     @Step
-    @Когда("я ввожу дополнительные данные софтассерт")
+    @И("я ввожу дополнительные данные usingRecursiveComparison")
+    public void я_ввожу_дополнительные_данные_usingRecursiveComparison() {
+        WebElement phoneInput = driver.findElement(By.id("INN-ИНН"));
+        phoneInput.sendKeys("123456789");
+        assertThat(phoneInput.getAttribute("value").length())
+                .as("Проверяем, что длина введённого значения составляет 6 символов")
+                .usingRecursiveComparison()
+                .isEqualTo(6);
+    }
+
+    @Step
+    @И("я ввожу дополнительные данные софтассерт")
     public void я_ввожу_дополнительные_данные_софтассерт() {
         SoftAssertions softly = new SoftAssertions();
 

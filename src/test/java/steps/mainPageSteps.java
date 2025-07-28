@@ -1,27 +1,33 @@
 package steps;
 
-import static org.assertj.core.api.Assertions.assertThat
-        ;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
-import io.cucumber.java.ru.*;
+import io.cucumber.java.ru.Когда;
+import io.cucumber.java.ru.Тогда;
 import io.qameta.allure.Step;
 import org.assertj.core.api.SoftAssertions;
-import org.openqa.selenium.*;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.InvalidArgumentException;
+import org.openqa.selenium.WebDriver;
+import scari.corp.BrowserStackPage.BrowserStackMainPage;
 import scari.corp.utils.ChromeDriverFactory;
 import scari.corp.utils.WebDriverUtils;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
 
 public class mainPageSteps {
+    BrowserStackMainPage objBrowserStackMainPage;
     private WebDriver driver;
     private final String BASE_URL = "https://www.bspb.ru";
 
     @Before
     public void setUp() {
         driver = ChromeDriverFactory.createDriver();
+        objBrowserStackMainPage = new BrowserStackMainPage(driver);
         WebDriverUtils.safeGet(driver, BASE_URL);
     }
-    
+
 
     @After
     public void tearDown() {
@@ -39,9 +45,8 @@ public class mainPageSteps {
     @Step
     @Тогда("отображается кнопка Войти")
     public void отображается_кнопка_Войти_на_главном_экране() {
-        WebElement login = driver.findElement(By.id("popover-trigger-:R3adt9jltmH1:"));
-        assertThat(login.isDisplayed())
-                .as("Кнопка войти должна отображаться")
+        assertThat(objBrowserStackMainPage.verifyLoginButtonIsDisplayed())
+                .as("Кнопка войти отображаться не должна")
                 .isTrue();
     }
 
@@ -76,9 +81,8 @@ public class mainPageSteps {
     @Step
     @Тогда("кнопка Войти не отображается")
     public void кнопка_Войти_не_отображается() {
-        WebElement login = driver.findElement(By.id("popover-trigger-:R3adt9jltmH1:"));
-        assertThat(login.isDisplayed())
-                .as("Кнопка войти отображаться, не должна")
+        assertThat(objBrowserStackMainPage.verifyLoginButtonIsDisplayed())
+                .as("Кнопка войти отображаться не должна")
                 .isFalse();
     }
 }

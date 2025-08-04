@@ -77,7 +77,7 @@ public class EqualsCollectionTests {
     }
 
     @Test
-    @DisplayName("Сравнение Json с новым ответом от OfficeRate usingRecursiveComparison при помощи Листа игнор полей overridingErrorMessage")
+    @DisplayName("Сравнение Json с новым ответом от OfficeRate usingRecursiveComparison при помощи Листа overridingErrorMessage")
     public void checkResponseOfficeRateUsingRecursiveComparisonListIgnorFieldOverridingMessage() {
         assertThat(actual.getItems())
                 .overridingErrorMessage("Ошибка переопределена %s", actual)
@@ -87,7 +87,7 @@ public class EqualsCollectionTests {
     }
 
     @Test
-    @DisplayName("Сравнение Json с новым ответом от OfficeRate usingRecursiveComparison при помощи Листа игнор полей withFailMessage")
+    @DisplayName("Сравнение Json с новым ответом от OfficeRate usingRecursiveComparison при помощи Листа withFailMessage")
     public void checkResponseOfficeRateUsingRecursiveComparisonListIgnorFieldWithFailMessage() {
         assertThat(actual.getItems())
                 .withFailMessage("Ошибка переопределена %s", actual)

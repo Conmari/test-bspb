@@ -1,6 +1,7 @@
 plugins {
     id("java-library")
     id("maven-publish")
+    id("io.qameta.allure") version "2.12.0"
 }
 
 repositories {
@@ -17,6 +18,8 @@ val junitPlatformVersion = "1.12.2"
 val cucumberVersion = "7.24.0"
 val lang3Version = "3.18.0"
 val assertjVersion = "3.27.3"
+val allureJunit5Version = "2.28.1"
+val allureCucumber7jvmVersion = "2.23.0"
 
 dependencies {
     implementation("org.seleniumhq.selenium:selenium-java:$seleniumVersion")

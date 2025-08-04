@@ -20,6 +20,9 @@ val lang3Version = "3.18.0"
 val assertjVersion = "3.27.3"
 val allureJunit5Version = "2.28.1"
 val allureCucumber7jvmVersion = "2.23.0"
+val restAssuredVersion = "5.5.5"
+val hamcrestVersion = "2.0.0.0"
+val jacksonVersion = "2.19.2"
 
 dependencies {
     implementation("org.seleniumhq.selenium:selenium-java:$seleniumVersion")
@@ -29,16 +32,22 @@ dependencies {
     implementation("org.slf4j:slf4j-api:$slf4jVersion")
     implementation("org.slf4j:slf4j-simple:$slf4jVersion")
 
+    implementation("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
+
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher:$junitPlatformVersion")    
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher:$junitPlatformVersion")
     testImplementation("org.junit.platform:junit-platform-suite-api:$junitPlatformVersion")
     testImplementation("org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion")
+
     testImplementation("io.cucumber:cucumber-java:$cucumberVersion")
     testImplementation("io.cucumber:cucumber-junit-platform-engine:$cucumberVersion")
     testImplementation("org.assertj:assertj-core:$assertjVersion")
 
-    testImplementation("io.qameta.allure:allure-junit5:2.28.1")
-    testImplementation("io.qameta.allure:allure-cucumber7-jvm:2.23.0")
+    testImplementation("io.qameta.allure:allure-junit5:$allureJunit5Version")
+    testImplementation("io.qameta.allure:allure-cucumber7-jvm:$allureCucumber7jvmVersion")
+
+    testImplementation("io.rest-assured:rest-assured:$restAssuredVersion")
+    testImplementation("org.hamcrest:java-hamcrest:$hamcrestVersion")
 
 }
 

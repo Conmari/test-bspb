@@ -2,6 +2,7 @@ plugins {
     id("java-library")
     id("maven-publish")
     id("io.qameta.allure") version "2.12.0"
+    id("io.freefair.aspectj.post-compile-weaving") version "6.6.1"
 }
 
 repositories {
@@ -23,16 +24,23 @@ val allureCucumber7jvmVersion = "2.23.0"
 val restAssuredVersion = "5.5.5"
 val hamcrestVersion = "2.0.0.0"
 val jacksonVersion = "2.19.2"
+val aspectjVersion = "1.9.24"
+val logbackVersion = "1.5.13"
 
 dependencies {
     implementation("org.seleniumhq.selenium:selenium-java:$seleniumVersion")
     implementation("io.github.bonigarcia:webdrivermanager:$webdriverManagerVersion")
     implementation("org.apache.commons:commons-lang3:$lang3Version")  /* webdriverManagerVersion подтягивал версию commons-lang3:3.17.0
-                                                                            внутри какая то уязвимость которая может превести к StackOverflowError */
+                                                                            внутри какая-то уязвимость которая может привести к StackOverflowError */
     implementation("org.slf4j:slf4j-api:$slf4jVersion")
-    implementation("org.slf4j:slf4j-simple:$slf4jVersion")
+    implementation("ch.qos.logback:logback-classic:$logbackVersion")
 
     implementation("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
+
+    implementation("org.aspectj:aspectjrt:$aspectjVersion")
+// лучше сделать implementation, чтобы классы были доступны при компиляции
+    implementation("org.aspectj:aspectjweaver:${aspectjVersion}")
+// Weaver нужен для load-time weaving или тестирования
 
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher:$junitPlatformVersion")
